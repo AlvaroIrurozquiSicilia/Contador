@@ -1,17 +1,16 @@
-package com.example.contador;
+package com.example.contador.pantallas;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.contador.Informacion;
+import com.example.contador.R;
+import com.example.contador.adapters.InformacionLVAdapter;
 
 import java.util.Arrays;
 import java.util.List;

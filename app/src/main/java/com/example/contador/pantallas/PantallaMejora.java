@@ -1,24 +1,25 @@
-package com.example.contador;
+package com.example.contador.pantallas;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.contador.Mejora;
+import com.example.contador.R;
+import com.example.contador.adapters.MejoraRVAdapater;
+import com.example.contador.interfaces.CallBack;
 
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-public class PantallaMejora extends AppCompatActivity implements CallBack{
+
+public class PantallaMejora extends AppCompatActivity implements CallBack {
     RecyclerView rv;
-    ExecutorService executor = Executors.newSingleThreadExecutor();
-    Handler handler = new Handler(Looper.getMainLooper());
     BigInteger coste;
     BigInteger costeAuto;
     BigInteger metales;
@@ -27,48 +28,49 @@ public class PantallaMejora extends AppCompatActivity implements CallBack{
     BigInteger auxMetales;
     boolean mejoraAuto = false;
     Button atras;
-    TextView datos;
     TextView metalesTexto;
     List<Mejora> l;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_mejora);
-        datos = findViewById(R.id.textView2);
+        metalesTexto = findViewById(R.id.textView2);
         Bundle extra = getIntent().getExtras();
-        metales = BigInteger.valueOf(extra.getInt("contador"));
-        incremento = BigInteger.valueOf(extra.getInt("incremento"));
-        datos.setText(String.valueOf(metales));
         incremento = BigInteger.valueOf(0);
         coste = BigInteger.valueOf(100);
         costeAuto = BigInteger.valueOf(100);
+        auxMetales = BigInteger.valueOf(0);
         autoIncremento = BigInteger.valueOf(0);
-        rv= findViewById(R.id.recyclerView);
+        metales = (BigInteger) (extra.getSerializable("contador"));
+        incremento = (BigInteger) (extra.getSerializable("incremento"));
+        metalesTexto.setText(String.valueOf(metales));
+        rv = findViewById(R.id.recyclerViewMejoras);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        l = Arrays.asList(
-                new Mejora("SGDHOGHSOIFJS", R.drawable.billetepng),
-                new Mejora("jigsdjgpijdsgs", R.drawable.ethereummonedapng),
-                );
+        l = Arrays.asList(new Mejora("SGDHOGHSOIFJS", R.drawable.billetepng), new Mejora("jigsdjgpijdsgs", R.drawable.ethereummonedapng));
         rv.setAdapter(new MejoraRVAdapater(l, this));
-
-        atras = findViewById(R.id.button);
+        atras = findViewById(R.id.botonAtras5);
         atras.setOnClickListener((view) -> {
             Intent intent = new Intent(PantallaMejora.this, MainActivity.class);
-            startActivity(intent);
+            intent.putExtra("contador", metales);
+            intent.putExtra("incremento", incremento);
+            intent.putExtra("automatico", mejoraAuto);
+            intent.putExtra("incrementoAutomatico", autoIncremento);
+            setResult(0, intent);
             finish();
         });
     }
+
     @Override
     public void llamadaMetodo(Mejora mejora) {
-        int i = 0;
-        if(rv.findViewHolderForAdapterPosition(new MejoraRVAdapater.ViewHolder(v)) = 1){
+        if (mejora.getImagen() == R.drawable.billetepng) {
             mejora1();
-        }else{
+        } else {
             mejora2();
         }
-
     }
+
     public void mejora1() {
         if (metales.compareTo(coste) == 0 || metales.compareTo(coste) == 1) {
             incremento = incremento.add(BigInteger.valueOf(2));
@@ -76,12 +78,8 @@ public class PantallaMejora extends AppCompatActivity implements CallBack{
             mostrar();
             coste = coste.add(BigInteger.valueOf(20));
         }
-        /*
-        ScaleAnimation fade_in = new ScaleAnimation(0.7f, 1.2f, 0.7f, 1.2f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        fade_in.setDuration(100);
-        mejoraImagen.startAnimation(fade_in);
-        */
     }
+
     public void mejora2() {
         if (metales.compareTo(costeAuto) == 0 || metales.compareTo(costeAuto) == 1) {
             mejoraAuto = true;
@@ -89,24 +87,9 @@ public class PantallaMejora extends AppCompatActivity implements CallBack{
             mostrar();
             costeAuto = costeAuto.add(BigInteger.valueOf(150));
             autoIncremento = autoIncremento.add(BigInteger.valueOf(1));
-            executor.execute(() -> {
-                while (mejoraAuto) {
-                    try {
-                        Thread.sleep(1000);
-                        metales = metales.add(autoIncremento);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    handler.post(this::mostrar);
-                }
-            });
-            /*
-            ScaleAnimation fade_in = new ScaleAnimation(0.7f, 1.2f, 0.7f, 1.2f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            fade_in.setDuration(100);
-            mejoraAutoBoton.startAnimation(fade_in);
-             */
         }
     }
+
     public void mostrar() {
         if (metales.compareTo(BigInteger.valueOf(1000)) == 1 && metales.compareTo(BigInteger.valueOf(1000000)) == -1) {
             auxMetales = metales.divide(BigInteger.valueOf(1000));
@@ -118,6 +101,4 @@ public class PantallaMejora extends AppCompatActivity implements CallBack{
             metalesTexto.setText(Integer.toString(auxMetales.intValue()));
         }
     }
-
-
 }

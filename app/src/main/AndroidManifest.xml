@@ -13,13 +13,22 @@
         android:theme="@style/Theme.Contador"
         tools:targetApi="31">
         <activity
-            android:name=".PantallaMejora"
+            android:name=".pantallas.PantallaUsuarios"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true"/>
+            android:name=".db.Iniciar_Sesion"
+            android:exported="false" />
         <activity
-            android:name=".PantallaInicio"
+            android:name=".db.Registrarse"
+            android:exported="false" />
+        <activity
+            android:name=".pantallas.PantallaMejora"
+            android:exported="false" />
+        <activity
+            android:name=".pantallas.MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".pantallas.PantallaInicio"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,11 +37,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PantallaInformacion"
-            android:exported="true"/>
+            android:name=".pantallas.PantallaInformacion"
+            android:exported="true" />
         <activity
-            android:name=".PantallaOpcion"
-            android:exported="true"/>
+            android:name=".pantallas.PantallaOpcion"
+            android:exported="true" />
     </application>
 
 </manifest>
