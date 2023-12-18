@@ -13,6 +13,15 @@
         android:theme="@style/Theme.Contador"
         tools:targetApi="31">
         <activity
+            android:name=".pantallas.PantallaPortada"
+            android:exported="true" />
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        />
+        <activity
             android:name=".pantallas.PantallaUsuarios"
             android:exported="false" />
         <activity
@@ -29,13 +38,7 @@
             android:exported="true" />
         <activity
             android:name=".pantallas.PantallaInicio"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".pantallas.PantallaInformacion"
             android:exported="true" />

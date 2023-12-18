@@ -37,7 +37,7 @@ public class ContadorBaseDatos extends SQLiteOpenHelper {
                 j.getMonedas(),
                 j.getImagen(),
                 j.getContraseña(),
-                j.getCorreo()
+                j.getEmail()
         });
         db.close();
     }
@@ -45,10 +45,18 @@ public class ContadorBaseDatos extends SQLiteOpenHelper {
     public boolean iniciarSesion(Jugador j) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery("SELECT nombre, monedas, imagenes, contraseña, correo FROM usuario WHERE correo=? AND contraseña=?", new String[]{
-                j.getCorreo(),
+                j.getEmail(),
                 j.getContraseña()
         });
         boolean logueado = c.getCount() > 0;
         return logueado;
+    }
+
+    public boolean existe(Jugador j) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT nombre, monedas, imagenes, contraseña, correo FROM usuario WHERE correo=?", new String[]{
+                j.getEmail()        });
+        boolean existe = c.getCount() > 0;
+        return existe;
     }
 }

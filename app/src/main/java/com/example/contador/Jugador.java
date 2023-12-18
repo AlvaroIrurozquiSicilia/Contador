@@ -1,23 +1,37 @@
 package com.example.contador;
 
+import android.widget.EditText;
+
 public class Jugador {
     String nombre;
     String monedas;
     int imagen;
     String contraseña;
-    String correo;
-    public Jugador(String nombre, String monedas, int imagen, String contraseña, String correo) {
+    String email;
+    public Jugador(String nombre, String monedas, int imagen, String contraseña, String email) {
         this.nombre = nombre;
         this.monedas = monedas;
         this.imagen = imagen;
         this.contraseña = contraseña;
-        this.correo = correo;
+        this.email = email;
     }
     public Jugador(String nombre, String monedas, int imagen) {
         this.nombre = nombre;
         this.monedas = monedas;
         this.imagen = imagen;
     }
+
+    public Jugador(String email, String contraseña) {
+        this.email = email;
+        this.contraseña = contraseña;
+    }
+
+    public Jugador(String email, String contraseña, String nick) {
+        this.email = email;
+        this.contraseña = contraseña;
+
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -50,11 +64,11 @@ public class Jugador {
         this.contraseña = contraseña;
     }
 
-    public String getCorreo(){
-        return correo;
+    public String getEmail(){
+        return email;
     }
 
-    public void setCorreo(String correo){
-        this.correo = correo;
+    public void setEmail(String email){
+        this.email = email;
     }
 }
